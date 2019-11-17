@@ -1,0 +1,1133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommNetManagerAPI</name>
+    </assembly>
+    <members>
+        <member name="T:CommNetManagerAPI.AssemblyChecker">
+            <summary>
+            CommNetManager's class to ensure that only the most recent version of the API implements its <see cref="T:CommNet.CommNetBody"/> and <see cref="T:CommNet.CommNetHome"/> classes.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.AssemblyChecker.CNMBodies">
+            <summary>
+            The <see cref="T:CommNetManagerAPI.CNMBody"/> instances actually used in game.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.AssemblyChecker.CNMHomes">
+            <summary>
+            The <see cref="T:CommNetManagerAPI.CNMHome"/> instances actually used in game.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.AssemblyChecker.IsElected">
+            <summary>
+            Gets a value indicating whether this instance is elected.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.AssemblyChecker.SetCommNetTypes">
+            <summary>
+            Sets the comm net types.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMBody">
+            <summary>
+            CommNetManager's implementation of <see cref="T:CommNet.CommNetBody"/>.
+            </summary>
+            <seealso cref="T:CommNet.CommNetBody" />
+        </member>
+        <member name="P:CommNetManagerAPI.CNMBody.Components">
+            <summary>
+            The modular CNMBodyComponents implemented in this type.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMBody.Body">
+            <summary>
+            The <see cref="T:CelestialBody"/> attached to this body.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMBody.Occluder">
+            <summary>
+            The <see cref="P:CommNetManagerAPI.CNMBody.Occluder"/> attached to this body.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.Initialize(CommNet.CommNetBody)">
+            <summary>
+            Initializes this instance based on the specified stock body.
+            </summary>
+            <param name="stockBody">The stock body.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.GetModuleOfType``1">
+            <summary>
+            Gets the CNMBodyComponent instance of the specified type.
+            </summary>
+            <typeparam name="T">The type to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.GetModuleOfType(System.Type)">
+            <summary>
+            Gets the CNMBodyComponent instance of the specified type.
+            </summary>
+            <param name="type">The type to get.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.CreateOccluder">
+            <summary>
+            Creates the occluder.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.OnDestroy">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.OnNetworkInitialized">
+            <summary>
+            Called when network initialized.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.OnNetworkPreUpdate">
+            <summary>
+            Called when network pre update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBody.InstantiateModularTypes">
+            <summary>
+            Instantiates the modular types.
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMBodyComponent">
+            <summary>
+            Derive from this class for CommNetManager to incorporate the methods into the CommNetBody.
+            </summary>
+            <seealso cref="T:UnityEngine.MonoBehaviour" />
+        </member>
+        <member name="P:CommNetManagerAPI.CNMBodyComponent.CommNetBody">
+            <summary>
+            The CommNetBody to which this component is attached.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBodyComponent.Initialize(CommNetManagerAPI.CNMBody)">
+            <summary>
+            Initializes the <see cref="T:CommNetManagerAPI.CNMBodyComponent"/>.
+            <para/> CAUTION: If overriding, you must call base.Initialize(body). 
+            </summary>
+            <param name="body">The linked CommNetBody.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBodyComponent.OnNetworkInitialized">
+            <summary>
+            Called when network initialized.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBodyComponent.OnNetworkPreUpdate">
+            <summary>
+            Called when network pre update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMBodyComponent.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMHome">
+            <summary>
+            CommNetManager's implementation of <see cref="T:CommNet.CommNetHome"/>.
+            </summary>
+            <seealso cref="T:CommNet.CommNetHome" />
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Components">
+            <summary>
+            The modular CNMHomeComponents implemented in this type.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Alt">
+            <summary>
+            The altitude of this station.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Lon">
+            <summary>
+            The longitude of this station.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Lat">
+            <summary>
+            The latitude of this station.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Body">
+            <summary>
+            The <see cref="T:CelestialBody"/> on which this Home is located.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHome.Comm">
+            <summary>
+            The <see cref="T:CommNet.CommNode"/> attached to this Home.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.Initialize(CommNet.CommNetHome)">
+            <summary>
+            Initializes this instance based on the specified stock home.
+            </summary>
+            <param name="stockHome">The stock home.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.GetModuleOfType``1">
+            <summary>
+            Gets the CNMHomeComponent instance of the specified type.
+            </summary>
+            <typeparam name="T">The type to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.GetModuleOfType(System.Type)">
+            <summary>
+            Gets the CNMHomeComponent instance of the specified type.
+            </summary>
+            <param name="type">The type to get.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.CreateNode">
+            <summary>
+            Creates the CommNode.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.OnDestroy">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.OnNetworkInitialized">
+            <summary>
+            Called when network initialized.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.OnNetworkPreUpdate">
+            <summary>
+            Called when network pre update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.Update">
+            <summary>
+            Update
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHome.InstantiateModularTypes">
+            <summary>
+            Instantiates the modular types.
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMHomeComponent">
+            <summary>
+            Derive from this class for CommNetManager to incorporate the methods into the CommNetHome.
+            </summary>
+            <seealso cref="T:UnityEngine.MonoBehaviour" />
+        </member>
+        <member name="P:CommNetManagerAPI.CNMHomeComponent.CommNetHome">
+            <summary>
+            The CommNetHome to which this component is attached.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHomeComponent.Initialize(CommNetManagerAPI.CNMHome)">
+            <summary>
+            Initializes the <see cref="T:CommNetManagerAPI.CNMHomeComponent"/>.
+            </summary>
+            <param name="home">The linked CommNetHome.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHomeComponent.OnNetworkInitialized">
+            <summary>
+            Called when network initialized.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHomeComponent.OnNetworkPreUpdate">
+            <summary>
+            Called when network pre update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHomeComponent.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMHomeComponent.Update">
+            <summary>
+            Update
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.CommNetExtensions">
+            <summary>
+            Extension methods for use with CommNet.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetExtensions.TryGetVessel(CommNet.CommNode,Vessel@)">
+            <summary>
+            Similar to <see cref="M:CommNetManagerAPI.CommNetExtensions.GetVessel(CommNet.CommNode)"/> but returns a bool indicating success.
+            </summary>
+            <param name="commNode">The node to find the parent vessel of.</param>
+            <param name="vessel">The returned vessel.</param>
+            <returns>True if successful.</returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetExtensions.GetVessel(CommNet.CommNode)">
+            <summary>
+            Gets the <see cref="T:Vessel"/>  associated with a <see cref="T:CommNet.CommNode"/>.
+            </summary>
+            <param name="commNode">The node to find the parent vessel of.</param>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrAndOr">
+            <summary>
+            Method attribute used to specify if the method returning a bool should be joined to other cooperating methods using AND or OR.
+            <para>WARNING: Methods that implement 'OR' MUST NOT call base.method() in their body.</para>
+            <para>Since the stock method will be called anyway, methods should not call base.method() anyway in their body if they detect a CommNetManager installation.</para>
+            <para>Instead, methods implementing 'AND' should return true and methods implementing 'OR' should return false.</para>
+            <para>NOTE: Methods implementing 'OR' should generally also be marked 'EARLY' and methods implementing 'AND' should generally be marked 'LATE'.</para>
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrAndOr.andOr">
+            <exclude />
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrAndOr.options">
+            <exclude />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrAndOr.options.AND">
+            <exclude />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrAndOr.options.OR">
+            <exclude />
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrAndOr.#ctor(CommNetManagerAPI.CNMAttrAndOr.options)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.CNMAttrAndOr"/> class.
+            </summary>
+            <param name="andOr">Enum specifying the option selected.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrAndOr.ToString">
+            <exclude />
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrSequence">
+            <summary>
+            Method attribute used to specify if the method should be called before or after the stock method.
+            <para>CAUTION: Methods should not call base.method() in their body if they detect a CommNetManager installation.</para>
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrSequence.when">
+            <exclude />
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrSequence.options">
+            <exclude />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrSequence.options.EARLY">
+            <exclude />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrSequence.options.LATE">
+            <exclude />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrSequence.options.POST">
+            <exclude />
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrSequence.#ctor(CommNetManagerAPI.CNMAttrSequence.options)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.CNMAttrSequence"/> class.
+            </summary>
+            <param name="when">Enum specifying the option selected.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrSequence.ToString">
+            <exclude />
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrBefore">
+            <summary>
+            Method attribute to specify that the method in question should precede the target type's method.
+            <para /> Not yet implemented. 
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrBefore.target">
+            <exclude />
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrBefore.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.CNMAttrBefore"/> class.
+            </summary>
+            <param name="target">The target class.</param>
+        </member>
+        <member name="T:CommNetManagerAPI.CNMAttrAfter">
+            <summary>
+            Method attribute to specify that the method in question should be preceded by the target type's method.
+            <para /> Not yet implemented. 
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="F:CommNetManagerAPI.CNMAttrAfter.target">
+            <exclude />
+        </member>
+        <member name="M:CommNetManagerAPI.CNMAttrAfter.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.CNMAttrAfter"/> class.
+            </summary>
+            <param name="target">The target class.</param>
+        </member>
+        <member name="T:CommNetManagerAPI.CommNetManagerChecker">
+            <summary>
+            Static API class to facilitate checking if CommNetManager is installed.
+            </summary>
+            <remarks>
+            Use <see cref="P:CommNetManagerAPI.CommNetManagerChecker.CommNetManagerInstalled"/> to determine if CommNetManager is installed.<para />
+            Use <see cref="M:CommNetManagerAPI.CommNetManagerChecker.SetCommNetManagerIfAvailable(CommNet.CommNetScenario)"/> to activate CommNetManager if it is installed.<para />
+            Use <see cref="M:CommNetManagerAPI.CommNetManagerChecker.GetCommNetManagerInstance"/> to get the handle to the current CommNetManagerNetwork instance.<para />
+            </remarks>
+        </member>
+        <member name="P:CommNetManagerAPI.CommNetManagerChecker.CommNetManagerInstalled">
+            <summary>
+            Checks if CommNetManager is installed.
+            </summary>
+            <returns>True if CommNetManager is installed.</returns>
+            <remarks>
+            Result is cached to minimize Reflection calls.
+            </remarks>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.GetCommNetManagerInstance">
+            <summary>
+            Gets the current instance of the CommNetManagerNetwork.
+            </summary>
+            <returns>Null if CommNetManager is not installed.</returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.BindToCommNetManager(CommNet.CommNetwork)">
+            <summary>
+            Binds the provided CommNetwork to the current CommNetManagerNetwork instance.
+            </summary>
+            <param name="bind">The derived CommNetwork instance which should be bound to CommNetManagerNetwork.</param>
+            <returns>True if succesful at binding, false if not.</returns>
+            <remarks>
+            This method links the protected fields inherited from CommNet.Network.Net<para />
+            <list type="bullet">
+            <listheader><description>CAUTION: When bound to CommNetManager, you should ensure the following methods do not call base.method():<para /></description></listheader>
+            <item><description>Add</description></item>
+            <item><description>Remove</description></item>
+            <item><description>Connect</description></item>
+            <item><description>Disconnect</description></item>
+            <item><description>Rebuild</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.SetCommNetManagerIfAvailable(CommNet.CommNetScenario,System.Type,CommNet.CommNetNetwork@)">
+            <summary>
+            Sets the CommNetNetwork object to be CommNetManager if CommNetManager is installed or a supplied type if it is not.
+            </summary>
+            <param name="scenario">Your instance of CommNetScenario.</param>
+            <param name="derivativeOfCommNetNetwork">Type of your network to instantiate if CommNetManager is not installed.</param>
+            <param name="CustomCommNetNetwork">The handle of the CommNetNetwork object that is being implemented.</param>
+            <returns>True if CommNetManager or the supplied Net was instantiated, false if not.</returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.SetCommNetManagerIfAvailable(CommNet.CommNetScenario,System.Type)">
+            <summary>
+            Sets the CommNetNetwork object to be CommNetManager if CommNetManager is installed or a supplied type if it is not.
+            </summary>
+            <param name="scenario">Your instance of CommNetScenario.</param>
+            <param name="derivativeOfCommNetNetwork">Type of your network to instantiate if CommNetManager is not installed.</param>
+            <returns>True if CommNetManager or the supplied Net was instantiated, False if not.</returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.SetCommNetManagerIfAvailable(CommNet.CommNetScenario,CommNet.CommNetNetwork@)">
+            <summary>
+            Sets the CommNetNetwork object to be CommNetManager if CommNetManager is installed.
+            </summary>
+            <param name="scenario">Your instance of CommNetScenario.</param>
+            <param name="CustomCommNetNetwork">The handle of the CommNetNetwork object that is being implemented.</param>
+            <returns>True if CommNetManager or the supplied Net was instantiated, False if not.</returns>
+        </member>
+        <member name="M:CommNetManagerAPI.CommNetManagerChecker.SetCommNetManagerIfAvailable(CommNet.CommNetScenario)">
+            <summary>
+            Sets the CommNetNetwork object to be CommNetManager if CommNetManager is installed.
+            </summary>
+            <param name="scenario">Your instance of CommNetScenario.</param>
+            <returns>True if CommNetManager or the supplied Net was instantiated, False if not.</returns>
+        </member>
+        <member name="T:CommNetManagerAPI.ModularCommNetVesselComponent">
+            <summary>
+            Derive from this class for CommNetManager to incorporate the methods into the VesselModule.
+            </summary>
+            <seealso cref="T:UnityEngine.MonoBehaviour" />
+        </member>
+        <member name="F:CommNetManagerAPI.ModularCommNetVesselComponent.vessel">
+            <summary>
+            Per KSP VesselModule
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.ModularCommNetVesselComponent.Vessel">
+            <summary>
+            Per KSP VesselModule
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.ModularCommNetVesselComponent.CommNetVessel">
+            <summary>
+            The CommNetVessel module to which this instance is attached.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.ModularCommNetVesselComponent.CommNetVesselAsPublic">
+            <summary>
+            The CommNetVessel module to which this instance is attached. Used for interface method calls.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.#ctor(CommNetManagerAPI.ModularCommNetVessel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.ModularCommNetVesselComponent"/> class.
+            </summary>
+            <param name="actualCommNetVessel">The CommNetVessel to which this instance is attached.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.ModularCommNetVesselComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.Awake">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnAwake">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnStart">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.Update">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnNetworkInitialized">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnNetworkPreUpdate">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnNetworkPostUpdate">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.CalculatePlasmaMult">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.UpdateComm">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.CreateControlConnection">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.GetBestTransmitter">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.GetControlLevel">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnMapFocusChange(MapObject)">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.GetSignalStrengthModifier(CommNet.CommNode)">
+            <summary>
+            CAUTION: DO NOT CALL base.method when deriving!
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnGoOffRails">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnGoOnRails">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnLoad(ConfigNode)">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVesselComponent.OnSave(ConfigNode)">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.ModularCommNetVessel">
+            <summary>
+            The CommNetVessel instance used by CommNetManager
+            </summary>
+            <seealso cref="T:CommNet.CommNetVessel" />
+            <seealso cref="T:CommNetManagerAPI.PublicCommNetVessel" />
+        </member>
+        <member name="P:CommNetManagerAPI.ModularCommNetVessel.Components">
+            <summary>
+            The modular CommNetVesselComponents implemented in this type.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetModuleOfType``1">
+            <summary>
+            Gets the ModularCommNetVessel instance of the specified type.
+            </summary>
+            <typeparam name="T">The type to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetModuleOfType(System.Type)">
+            <summary>
+            Gets the ModularCommNetVessel instance of the specified type.
+            </summary>
+            <param name="type">The type to get.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnAwake">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnStart">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnDestroy">
+            <summary>
+            Per Unity docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnGoOffRails">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnGoOnRails">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnLoad(ConfigNode)">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnSave(ConfigNode)">
+            <summary>
+            Per KSP docs.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.Update">
+            <summary>
+            Update
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.CalculatePlasmaMult">
+            <summary>
+            Calculates the plasma mult.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.UpdateComm">
+            <summary>
+            Updates the Comm field.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.CreateControlConnection">
+            <summary>
+            Creates the control connection.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetBestTransmitter">
+            <summary>
+            Gets the best transmitter.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetControlLevel">
+            <summary>
+            Gets the control level.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetSignalStrengthModifier(CommNet.CommNode)">
+            <summary>
+            Gets the signal strength modifier.
+            </summary>
+            <param name="b">The other node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.Update(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Update
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnNetworkInitialized">
+            <summary>
+            Called when network initialized.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnNetworkPreUpdate">
+            <summary>
+            Called when network pre update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnNetworkPostUpdate">
+            <summary>
+            Called when network post update.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.CalculatePlasmaMult(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Calculates the plasma mult.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.UpdateComm(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Updates the Comm field.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.CreateControlConnection(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Creates the control connection.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetBestTransmitter(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Gets the best transmitter.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetControlLevel(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Gets the control level.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.OnMapFocusChange(MapObject)">
+            <summary>
+            Called when map focus changes.
+            </summary>
+            <param name="target">The target.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.GetSignalStrengthModifier(CommNetManagerAPI.ModularCommNetVesselComponent,CommNet.CommNode)">
+            <summary>
+            Gets the signal strength modifier.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <param name="b">The other node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.ModularCommNetVessel.InstantiateModularTypes">
+            <summary>
+            Instantiates the modular types.
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.PublicCommNet">
+            <summary>
+            Public implementation of many protected methods. Cast a CommNetManager instance to this interface to call these methods.
+            <para />USE WITH CAUTION.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.GetInstance">
+            <summary>
+            Gets the instance of CommNetManagerNetwork.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.SetNodeConnection(CommNet.CommNode,CommNet.CommNode)">
+            <summary>
+            Sets the node connection.
+            </summary>
+            <param name="a">a.</param>
+            <param name="b">The b.</param>
+            <returns></returns>
+            <remarks>Calls <see cref="M:CommNetManagerAPI.PublicCommNet.TryConnect(CommNet.CommNode,CommNet.CommNode,System.Double,System.Boolean,System.Boolean,System.Boolean)"/>.</remarks> 
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Add(CommNet.CommNode)">
+            <summary>
+            Adds the specified connection.
+            </summary>
+            <param name="conn">The connection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Add(CommNet.Occluder)">
+            <summary>
+            Adds the specified connection.
+            </summary>
+            <param name="conn">The connection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Connect(CommNet.CommNode,CommNet.CommNode,System.Double)">
+            <summary>
+            Connects two nodes.
+            <para />Note: This does not set many variables associated with a <see cref="T:CommNet.CommLink"/> . Generally, <see cref="M:CommNetManagerAPI.PublicCommNet.TryConnect(CommNet.CommNode,CommNet.CommNode,System.Double,System.Boolean,System.Boolean,System.Boolean)"/> would do much of that.
+            </summary>
+            <param name="a">Node A</param>
+            <param name="b">Node B</param>
+            <param name="distance">The distance between nodes.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.CreateShortestPathTree(CommNet.CommNode,CommNet.CommNode)">
+            <summary>
+            Creates the shortest path tree.
+            </summary>
+            <param name="start">The starting node.</param>
+            <param name="end">The ending node.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Disconnect(CommNet.CommNode,CommNet.CommNode,System.Boolean)">
+            <summary>
+            Disconnects two nodes.
+            </summary>
+            <param name="a">Node A</param>
+            <param name="b">Node B</param>
+            <param name="removeFromA">Remove B from A as well.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.FindClosestControlSource(CommNet.CommNode,CommNet.CommPath)">
+            <summary>
+            Finds the closest control source.
+            </summary>
+            <param name="from">The CommNode from which to find a control source.</param>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.FindClosestWhere(CommNet.CommNode,CommNet.CommPath,System.Func{CommNet.CommNode,CommNet.CommNode,System.Boolean})">
+            <summary>
+            Finds the closest according to some clause.
+            </summary>
+            <param name="start">The starting node.</param>
+            <param name="path">The path.</param>
+            <param name="where">The clause.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.FindHome(CommNet.CommNode,CommNet.CommPath)">
+            <summary>
+            Finds home from a CommNode.
+            </summary>
+            <param name="from">The CommNode from which to find home.</param>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.FindPath(CommNet.CommNode,CommNet.CommPath,CommNet.CommNode)">
+            <summary>
+            Finds a path between two CommNodes.
+            </summary>
+            <param name="start">The starting node.</param>
+            <param name="path">The path.</param>
+            <param name="end">The ending node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.GetLinkPoints(System.Collections.Generic.List{UnityEngine.Vector3})">
+            <summary>
+            Gets the link points.
+            </summary>
+            <param name="discreteLines">The discrete lines.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.PostUpdateNodes">
+            <summary>
+            Called after updating the CommNodes.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.PreUpdateNodes">
+            <summary>
+            Called before updating the CommNodes.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Rebuild">
+            <summary>
+            Rebuilds the network.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Remove(CommNet.CommNode)">
+            <summary>
+            Removes the specified connection.
+            </summary>
+            <param name="conn">The connection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.Remove(CommNet.Occluder)">
+            <summary>
+            Removes the specified connection.
+            </summary>
+            <param name="conn">The connection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.TestOcclusion(Vector3d,CommNet.Occluder,Vector3d,CommNet.Occluder,System.Double)">
+            <summary>
+            Tests the occlusion.
+            </summary>
+            <param name="aPos">a position.</param>
+            <param name="a">a.</param>
+            <param name="bPos">The b position.</param>
+            <param name="b">The b.</param>
+            <param name="distance">The distance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.TryConnect(CommNet.CommNode,CommNet.CommNode,System.Double,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Tries to connect two nodes.
+            </summary>
+            <param name="a">Node A</param>
+            <param name="b">Node B</param>
+            <param name="distance">The distance between nodes</param>
+            <param name="aCanRelay">Can node A relay?</param>
+            <param name="bCanRelay">Can node B relay?</param>
+            <param name="bothRelay">Can both nodes relay?</param>
+            <returns></returns>
+            <remarks>Calls <see cref="M:CommNetManagerAPI.PublicCommNet.Connect(CommNet.CommNode,CommNet.CommNode,System.Double)"/>.</remarks> 
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.UpdateNetwork">
+            <summary>
+            Updates the network.
+            </summary>
+            <remarks>Calls <see cref="M:CommNetManagerAPI.PublicCommNet.Rebuild"/> and <see cref="M:CommNetManagerAPI.PublicCommNet.SetNodeConnection(CommNet.CommNode,CommNet.CommNode)"/>.</remarks> 
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.UpdateShortestPath(CommNet.CommNode,CommNet.CommNode,CommNet.CommLink,System.Double,CommNet.CommNode,CommNet.CommNode)">
+            <summary>
+            Updates the shortest path between two nodes.
+            </summary>
+            <param name="a">Node A</param>
+            <param name="b">Node B</param>
+            <param name="link">The CommLink</param>
+            <param name="bestCost">The best cost.</param>
+            <param name="startNode">The start node.</param>
+            <param name="endNode">The end node.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNet.UpdateShortestWhere(CommNet.CommNode,CommNet.CommNode,CommNet.CommLink,System.Double,CommNet.CommNode,System.Func{CommNet.CommNode,CommNet.CommNode,System.Boolean})">
+            <summary>
+            Updates the shortest path with some constraint.
+            </summary>
+            <param name="a">Node A</param>
+            <param name="b">Node B</param>
+            <param name="link">The CommLink</param>
+            <param name="bestCost">The best cost.</param>
+            <param name="startNode">The start node.</param>
+            <param name="whereClause">The constraint clause.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommNetManagerAPI.PublicCommNetVessel">
+            <summary>
+            A version of CommNetVessel with certain methods exposed.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.Update(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Update
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.CalculatePlasmaMult(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Calculates the plasma mult.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.UpdateComm(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Updates the Comm field.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.CreateControlConnection(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Creates the control connection.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.GetBestTransmitter(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Gets the best transmitter.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.GetControlLevel(CommNetManagerAPI.ModularCommNetVesselComponent)">
+            <summary>
+            Gets the control level.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.PublicCommNetVessel.GetSignalStrengthModifier(CommNetManagerAPI.ModularCommNetVesselComponent,CommNet.CommNode)">
+            <summary>
+            Gets the signal strength modifier.
+            </summary>
+            <param name="callingInstance">The calling instance.</param>
+            <param name="b">The other node.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommNetManagerAPI.SequenceList`1">
+            <summary>
+            A custom <see cref="T:System.Collections.Generic.List`1"/> type for sorting methods into early, late, and post sequence.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.EarlyLate">
+            <summary>
+            Gets the Early and Late lists concatenated.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.LatePost">
+            <summary>
+            Gets the Late and Post lists concatenated.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.EarlyPost">
+            <summary>
+            Gets the Early and Post lists concatenated.
+            </summary>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.All">
+            <summary>
+            Gets the Early, Late, and Post lists concatenated.
+            </summary>
+        </member>
+        <member name="F:CommNetManagerAPI.SequenceList`1.Early">
+            <summary>
+            The Early list.
+            </summary>
+        </member>
+        <member name="F:CommNetManagerAPI.SequenceList`1.Late">
+            <summary>
+            The Late list.
+            </summary>
+        </member>
+        <member name="F:CommNetManagerAPI.SequenceList`1.Post">
+            <summary>
+            The Post list.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`1.#ctor(System.Collections.Generic.List{`0},System.Collections.Generic.List{`0},System.Collections.Generic.List{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.SequenceList`1"/> class.
+            </summary>
+            <param name="Early">The Early list.</param>
+            <param name="Late">The Late list.</param>
+            <param name="Post">The Post list.</param>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.Item(System.Int32)">
+            <summary>
+            Gets the specified <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <value>
+            The <see cref="T:System.Collections.Generic.List`1"/>.
+            </value>
+            <param name="i">The sublist index.<para /> 0=>Early, 1=>Late, 2=> Post</param>
+            <returns></returns>
+        </member>
+        <member name="P:CommNetManagerAPI.SequenceList`1.Item(CommNetManagerAPI.CNMAttrSequence.options)">
+            <summary>
+            Gets the specified <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <value>
+            The <see cref="T:System.Collections.Generic.List`1"/>.
+            </value>
+            <param name="sequence">The sublist.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`1.Add(CommNetManagerAPI.CNMAttrSequence.options,`0)">
+            <summary>
+            Adds an object to the end of the specified sublist of the <see cref="T:CommNetManagerAPI.SequenceList`1"/>.
+            </summary>
+            <param name="sequence">The sublist.</param>
+            <param name="obj">The object to add.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`1.Remove(CommNetManagerAPI.CNMAttrSequence.options,`0)">
+            <summary>
+            Removes the first instance of an object from the specified sublist of the <see cref="T:CommNetManagerAPI.SequenceList`1"/>.
+            </summary>
+            <param name="sequence">The sublist.</param>
+            <param name="obj">The object to remove.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`1.Clear">
+            <summary>
+            Removes all elements from the <see cref="T:CommNetManagerAPI.SequenceList`1"/>.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`1.Clear(CommNetManagerAPI.CNMAttrSequence.options)">
+            <summary>
+            Removes all elements from sublist of the <see cref="T:CommNetManagerAPI.SequenceList`1"/>.
+            </summary>
+        </member>
+        <member name="T:CommNetManagerAPI.SequenceList`2">
+            <summary>
+            A custom <see cref="T:System.Collections.Generic.List`1"/> type for sorting methods into early, late, and post sequence. Includes a metadata field.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TBacking"></typeparam>
+        </member>
+        <member name="F:CommNetManagerAPI.SequenceList`2.MetaDict">
+            <summary>
+            The metadata dictionary.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommNetManagerAPI.SequenceList`2"/> class.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`2.Add(CommNetManagerAPI.CNMAttrSequence.options,`0,`1)">
+            <summary>
+            Adds an object to the end of the specified sublist of the <see cref="T:CommNetManagerAPI.SequenceList`2"/>.
+            </summary>
+            <param name="sequence">The sublist.</param>
+            <param name="obj">The object to add.</param>
+            <param name="meta">The metadata for the object.</param>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`2.Clear">
+            <summary>
+            Removes all elements from the <see cref="T:CommNetManagerAPI.SequenceList`2"/>.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`2.Clear(CommNetManagerAPI.CNMAttrSequence.options)">
+            <summary>
+            Removes all elements from sublist of the <see cref="T:CommNetManagerAPI.SequenceList`2"/>.
+            </summary>
+        </member>
+        <member name="M:CommNetManagerAPI.SequenceList`2.Remove(CommNetManagerAPI.CNMAttrSequence.options,`0)">
+            <summary>
+            Removes the first instance of an object from the specified sublist of the <see cref="T:CommNetManagerAPI.SequenceList`2"/>.
+            </summary>
+            <param name="sequence">The sublist.</param>
+            <param name="obj">The object to remove.</param>
+        </member>
+    </members>
+</doc>

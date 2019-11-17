@@ -1,63 +1,146 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ESLDCore
 {
     public class ESLDTechbox : PartModule
     {
+        [KSPField]
+        public string animationName = "";
+
+        Animation anim;
+
         [KSPField(guiName = "Status", isPersistant = true, guiActive = true)]
         public string techBoxStatus;
 
         [KSPField(isPersistant = true, guiActive = false)]
         public bool activated = false;
 
-        [KSPField(isPersistant = true, guiActive = false)]
+        [KSPField(guiActive = false)]
         public string techBoxModel;
 
-        public override void OnUpdate()
+        [KSPField]
+        public bool alwaysActive = false;
+
+        Logger log = new Logger("ESLDCore:ESLDTechbox: ");
+
+        protected void ForceUpdateTechboxes()
         {
-            ModuleAnimateGeneric MAG = part.FindModuleImplementing<ModuleAnimateGeneric>();
-            MAG.Events["Toggle"].guiActive = false;
-            if (activated && MAG.Progress == 0 && !MAG.IsMoving())
+            foreach (ESLDBeacon beacon in vessel.FindPartModulesImplementing<ESLDBeacon>())
             {
-                MAG.Toggle();
-            }
-            else if (!activated && MAG.Progress == 1 && !MAG.IsMoving())
-            {
-                MAG.Toggle();
+                beacon.CheckOwnTechBoxes();
             }
         }
 
         [KSPEvent(name = "TechBoxOn", active = true, guiActive = true, guiName = "Activate")]
         public void TechBoxOn()
         {
-            part.force_activate();
-            activated = true;
-            techBoxStatus = techBoxModel + " Active.";
-            Events["TechBoxOn"].active = false;
-            Events["TechBoxOff"].active = true;
-            foreach (ESLDBeacon beacon in vessel.FindPartModulesImplementing<ESLDBeacon>())
+            if (!activated)
             {
-                beacon.checkOwnTechBoxes();
+                part.force_activate();
+                activated = true;
+                ForceUpdateTechboxes();
+                SetEventsActions(true);
+                PlayAnimation(1f);
             }
+            else
+                log.Warning("Can only activate when deactivated!");
         }
         
         [KSPEvent(name = "TechBoxOff", active = false, guiActive = true, guiName = "Deactivate")]
         public void TechBoxOff()
         {
-            part.deactivate();
-            activated = false;
-            techBoxStatus = techBoxModel + " Inactive.";
-            Events["TechBoxOn"].active = true;
-            Events["TechBoxOff"].active = false;
-            foreach (ESLDBeacon beacon in vessel.FindPartModulesImplementing<ESLDBeacon>())
+            if (activated)
             {
-                beacon.checkOwnTechBoxes();
+                activated = false;
+                ForceUpdateTechboxes();
+                SetEventsActions(false);
+                PlayAnimation(-1f);
             }
+            else
+                log.Warning("Can only deactivate when activated!");
+        }
+
+        [KSPAction("Toggle TechBox")]
+        public void ToggleTBAction(KSPActionParam param)
+        {
+            if (activated)
+                TechBoxOff();
+            else
+                TechBoxOn();
+        }
+        [KSPAction("Activate TechBox")]
+        public void ActivateTBAction(KSPActionParam param)
+            => TechBoxOn();
+        [KSPAction("Deactivate TechBox")]
+        public void DeactivateTBAction(KSPActionParam param)
+            => TechBoxOff();
+
+        public override void OnStart(StartState state)
+        {
+            if (animationName != "")
+            {
+                anim = part.FindModelAnimators(animationName).FirstOrDefault();
+                if (anim == null)
+                    log.Warning("Animation not found! " + animationName);
+                else
+                {
+                    log.Debug("Animation found: " + animationName);
+                    anim[animationName].wrapMode = WrapMode.Once;
+                    if (activated)
+                    {
+                        anim[animationName].normalizedTime = 1;
+                        anim.Play(animationName);
+                    }
+                    else
+                    {
+                        anim[animationName].normalizedTime = 0;
+                        anim[animationName].normalizedSpeed = -10;
+                        anim.Play(animationName);
+                    }
+                }
+            }
+            if (alwaysActive)
+            {
+                part.force_activate();
+                activated = true;
+                ForceUpdateTechboxes();
+                SetEventsActions(true);
+                Events["TechBoxOff"].active = false;
+                Actions["DeactivateTBAction"].active = false;
+                Actions["ToggleTBAction"].active = false;
+                PlayAnimation(1f);
+            }
+        }
+
+        private void SetEventsActions(bool activated)
+        {
+            techBoxStatus = techBoxModel + (activated ? " Active." : " Inactive.");
+            Events["TechBoxOn"].active = !activated;
+            Events["TechBoxOff"].active = activated;
+            Actions["ActivateTBAction"].active = !activated;
+            Actions["DeactivateTBAction"].active = activated;
+        }
+
+        private void PlayAnimation(float speed)
+        {
+            if (anim == null) return;
+            anim[animationName].normalizedSpeed = speed;
+            anim.Play(animationName);
+        }
+
+        public override string GetInfo()
+        {
+            StringBuilder info = new StringBuilder();
+
+            info.AppendLine("Techbox Type: " + techBoxModel);
+            if (alwaysActive)
+                info.AppendLine("<color=#99ff00ff>Always activated</color>");
+            return info.ToString().TrimEnd(Environment.NewLine.ToCharArray());
         }
     }
 }

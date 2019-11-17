@@ -1,70 +1,29 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using KSP.UI.Screens;
 
 namespace ESLDCore
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class HailerButton : MonoBehaviour
     {
-        private ApplicationLauncherButton button;
+        public static HailerButton Instance;
+        public ApplicationLauncherButton button;
         private Vessel vessel;
         private ESLDHailer hailer;
-        private bool canHail = false;
+        public bool canHail = false;
         private Texture2D ESLDButtonOn = new Texture2D(38, 38, TextureFormat.ARGB32, false);
-        public FlightCamera mainCam = null;
-        public bool isDazzling = false;
+        private FlightCamera mainCam = null;
+        private bool isDazzling = false;
         private float currentFOV = 60;
         private float userFOV = 60;
         private float currentDistance = 1;
         private float userDistance = 1;
+        Logger log = new Logger("ESLDCore:HailerButton: ");
 
         public void Update()
-        {
-            if(FlightGlobals.ActiveVessel != null) // Grab active vessel.
-            {
-                vessel = FlightGlobals.ActiveVessel;
-                if (vessel.FindPartModulesImplementing<ESLDHailer>().Count == 0) // Has a hailer?
-                {
-                    canHail = false;
-                    hailer = null;
-                }
-                else
-                {
-                    canHail = true;
-                    hailer = vessel.FindPartModulesImplementing<ESLDHailer>().First();
-                    foreach (ESLDHailer ehail in vessel.FindPartModulesImplementing<ESLDHailer>())
-                    {
-                        ehail.masterClass = this;
-                    }
-                }
-            }
-            if (canHail && this.button == null)
-            {
-                onGUIApplicationLauncherReady();
-            }
-            if (!canHail && this.button != null)
-            {
-                killButton();
-            }
-            // Sync GUI & Button States
-            if (this.button != null)
-            {
-                if (this.button.State == RUIToggleButton.ButtonState.TRUE && !hailer.guiopen)
-                {
-                    this.button.SetFalse();
-                }
-                if (this.button.State == RUIToggleButton.ButtonState.FALSE && hailer.guiopen)
-                {
-                    this.button.SetTrue();
-                }
-            }
-        }
-
-        public void FixedUpdate()
         {
             if (isDazzling)
             {
@@ -72,65 +31,62 @@ namespace ESLDCore
                 currentDistance = Mathf.Lerp(currentDistance, userDistance, 0.04f);
                 mainCam.SetFoV(currentFOV);
                 mainCam.SetDistance(currentDistance);
-                print("Distance: " + currentDistance);
+                //log.debug("Distance: " + currentDistance);
                 if (userFOV + 0.25 >= currentFOV)
                 {
                     mainCam.SetFoV(userFOV);
                     mainCam.SetDistance(userDistance);
-                    print("Done messing with camera!");
+                    log.Debug("Done messing with camera!");
                     isDazzling = false;
                 }
-                
             }
         }
 
         public void Awake()
         {
-            GameEvents.onGUIApplicationLauncherReady.Add(onGUIApplicationLauncherReady);
-            GameEvents.onGameSceneLoadRequested.Add(onSceneChangeRequest);
-            GameEvents.onVesselChange.Add(onVesselChange);
+            if (Instance != null)
+                Destroy(Instance);
+            Instance = this;
+            //GameEvents.onGUIApplicationLauncherReady.Add(onGUIApplicationLauncherReady);
+            GameEvents.onGameSceneLoadRequested.Add(OnSceneChangeRequest);
+            GameEvents.onVesselChange.Add(OnVesselChange);
+            GameEvents.onGUIApplicationLauncherDestroyed.Add(KillButton);
             ESLDButtonOn = GameDatabase.Instance.GetTexture("ESLDBeacons/Textures/launcher", false);
+            GameEvents.onGameSceneLoadRequested.Add(OnGameSceneLoadRequestedForAppLauncher);
             mainCam = FlightCamera.fetch;
         }
 
-        public void onDestroy()
+        public void OnDestroy()
         {
-            GameEvents.onGUIApplicationLauncherReady.Remove(onGUIApplicationLauncherReady);
-            GameEvents.onGameSceneLoadRequested.Remove(onSceneChangeRequest);
-            GameEvents.onVesselChange.Remove(onVesselChange);
-            killButton();
+            GameEvents.onGUIApplicationLauncherReady.Remove(OnGUIApplicationLauncherReady);
+            GameEvents.onGameSceneLoadRequested.Remove(OnSceneChangeRequest);
+            GameEvents.onVesselChange.Remove(OnVesselChange);
+            GameEvents.onGUIApplicationLauncherDestroyed.Remove(KillButton);
+            KillButton();
+            GameEvents.onGameSceneLoadRequested.Remove(OnGameSceneLoadRequestedForAppLauncher);
         }
 
-        private void onTrue()
+        private void OnTrue()
         {
-            if (hailer != null)
-            {
-                hailer.guiopen = true;
-                hailer.HailerActivate();
-                hailer.HailerGUIOpen();
-            }
+            OnVesselChange(FlightGlobals.ActiveVessel);
+            HailerGUI.ActivateGUI(FlightGlobals.ActiveVessel);
         }
 
-        private void onFalse()
-        {
-            if (hailer != null)
-            {
-                hailer.HailerDeactivate();
-            }
-        }
+        private void OnFalse()
+            => HailerGUI.CloseAllGUIs();
 
 
-        private void onGUIApplicationLauncherReady()
+        private void OnGUIApplicationLauncherReady()
         {
             if (this.button != null)
             {
-                killButton();
+                KillButton();
             }
             if (canHail)
             {
                 this.button = ApplicationLauncher.Instance.AddModApplication(
-                    this.onTrue,
-                    this.onFalse,
+                    this.OnTrue,
+                    this.OnFalse,
                     null,
                     null,
                     null,
@@ -140,68 +96,46 @@ namespace ESLDCore
             }
         }
 
-        public void onSceneChangeRequest(GameScenes _scene)
+        public void OnSceneChangeRequest(GameScenes _scene)
+            => KillButton();
+
+        public void OnVesselChange(Vessel vessel)
         {
-            killButton();
+            HailerGUI.CloseGUI(this.vessel);
+            this.vessel = vessel;
+
+            hailer = vessel?.FindPartModulesImplementing<ESLDHailer>().FirstOrDefault();
+
+            canHail = hailer != null;
+
+            if (canHail && button == null)
+                OnGUIApplicationLauncherReady();
+            else if (!canHail && button != null)
+                KillButton();
         }
 
-        public void onVesselChange(Vessel _vessel)
+        private void KillButton()
         {
-            killButton();
-        }
-
-        private void killButton()
-        {
-            if (button != null)
+            HailerGUI.CloseAllGUIs();
+            if (button != null && ApplicationLauncher.Instance != null)
             {
                 ApplicationLauncher.Instance.RemoveModApplication(button);
+                button = null;
             }
         }
 
+        void OnGameSceneLoadRequestedForAppLauncher(GameScenes SceneToLoad)
+            => KillButton();
+
         // Warp Effect
-        public void dazzle()
+        public void Dazzle()
         {
             userFOV = mainCam.FieldOfView;
             userDistance = mainCam.Distance;
             currentFOV = 180;
             currentDistance = 0.1f;
             isDazzling = true;
-            print("Messing with camera!");
-        }
-
-        // Finds if the path between beacons passes too close to a planet or is within its gravity well.
-        public KeyValuePair<string, CelestialBody> HasTransferPath(Vessel vOrigin, Vessel vDestination, double gLimit)
-        {
-            // Cribbed with love from RemoteTech.  I have no head for vectors.
-            var returnPair = new KeyValuePair<string, CelestialBody>("start", vOrigin.mainBody);
-            Vector3d opos = vOrigin.GetWorldPos3D();
-            Vector3d dpos = vDestination.GetWorldPos3D();
-            foreach (CelestialBody rock in FlightGlobals.Bodies)
-            {
-                Vector3d bodyFromOrigin = rock.position - opos;
-                Vector3d destFromOrigin = dpos - opos;
-                if (Vector3d.Dot(bodyFromOrigin, destFromOrigin) <= 0) continue;
-                Vector3d destFromOriginNorm = destFromOrigin.normalized;
-                if (Vector3d.Dot(bodyFromOrigin, destFromOriginNorm) >= destFromOrigin.magnitude) continue;
-                Vector3d lateralOffset = bodyFromOrigin - Vector3d.Dot(bodyFromOrigin, destFromOriginNorm) * destFromOriginNorm;
-                double limbo = Math.Sqrt((6.673E-11 * rock.Mass) / gLimit) - rock.Radius; // How low can we go?
-                string limbotype = "Gravity";
-                if (limbo < rock.Radius + rock.Radius * 0.25)
-                {
-                    limbo = rock.Radius + rock.Radius * .025;
-                    limbotype = "Proximity";
-                }
-                if (lateralOffset.magnitude < limbo)
-                {
-                    returnPair = new KeyValuePair<string, CelestialBody>(limbotype, rock);
-                    //print("Lateral Offset was " + lateralOffset.magnitude + "m and needed to be " + limbo + "m, failed due to " + limbotype + " check for " + rock.name + ".");
-                    return returnPair;
-                }
-            }
-            if (FlightGlobals.getGeeForceAtPosition(vDestination.GetWorldPos3D()).magnitude > gLimit) return new KeyValuePair<string, CelestialBody>("Gravity", vDestination.mainBody);
-            returnPair = new KeyValuePair<string, CelestialBody>("OK", null);
-            return returnPair;
+            log.Debug("Messing with camera!");
         }
     }
-        
 }
